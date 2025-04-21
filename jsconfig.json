@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".", // root dari path
+    "paths": {
+      "@/*": ["src/*"] // path alias
+    }
+  },
+  "include": ["src"]
+}
