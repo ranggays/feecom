@@ -4,9 +4,11 @@ import { FiShoppingCart, FiUser, FiMenu, FiX } from "react-icons/fi";
 import bgWireless from "../assets/wireless.jpg";
 import bgSmartwatch from "../assets/smartwatch.jpg";
 import bgSpeaker from "../assets/portable.jpg";
+import { logout } from "@/services/auth.js";
 
-export default function Storefront() {
+export default function Storefront({user}) {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [userDropdownOpen, setUserDropdownOpen] = useState(false);
     const products = [
       {
         id: 1,
@@ -27,6 +29,15 @@ export default function Storefront() {
         image: bgSpeaker,
       },
     ];
+
+    const handleLogout = async () => {
+      try {
+        await logout();
+        window.location.href = "/login";
+      } catch (error) {
+        console.error("Logout failed", error);
+      }
+    }
   
     return (
       <div className="bg-gray-50 min-h-screen">
@@ -52,7 +63,23 @@ export default function Storefront() {
               className="hidden md:block px-3 py-1 border rounded-md text-sm w-40"
             />
             <FiShoppingCart className="text-2xl text-gray-700 hover:text-blue-600 cursor-pointer" />
-            <FiUser className="text-2xl text-gray-700 hover:text-blue-600 cursor-pointer" />
+            <div className="relative">
+              <FiUser className="text-2xl text-gray-700 hover:text-blue-600 cursor-pointer" onClick={() => setUserDropdownOpen(!userDropdownOpen)}/>
+
+              {userDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                    <div className="px-4 py-2 text-sm text-gray-700 border-b">👤 {user.fullName}</div>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+
+
+            </div>
           </div>
         </div>
 

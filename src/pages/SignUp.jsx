@@ -10,7 +10,7 @@ export default function SignUp() {
   // const [userName, setUserName] = useState("");
 // const [email, setEmail] = useState("");
 // const [password, setPassword] = useState("");
-const [data, setData] = useState({username : '', email : '', password : ''});
+const [data, setData] = useState({fullName : '', email : '', password : ''});
 const navigate = useNavigate();
 
 const handlerSignUp = async (e) => {
@@ -33,7 +33,7 @@ const handleGoogleLogin = () => {
 };
 
 const handlerChangeUserName = (e) => {
-  setData({...data, username: e.target.value});
+  setData({...data, fullName: e.target.value});
 }
 
 const handlerChangeEmail = (e) => {
@@ -60,7 +60,7 @@ const handlerChangePassword = (e) => {
             <input
               type="text"
               placeholder="Your Name"
-              value={userName}
+              value={data.fullName}
               onChange={handlerChangeUserName}
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
@@ -70,7 +70,7 @@ const handlerChangePassword = (e) => {
             <label className="block text-gray-600 font-medium mb-1">Email</label>
             <input
               type="email"
-              value={email}
+              value={data.email}
               onChange={handlerChangeEmail}
               placeholder="you@example.com"
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -82,7 +82,7 @@ const handlerChangePassword = (e) => {
             <input
               type="password"
               placeholder="********"
-              value={password}
+              value={data.password}
               onChange={handlerChangePassword}
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
