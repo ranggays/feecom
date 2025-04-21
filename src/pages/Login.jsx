@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginLocal } from "../services/auth.js";
+import BgGoogle from "../assets/google.png";
 
 function Login({setUser}){
 
@@ -78,12 +79,8 @@ function Login({setUser}){
               <p className="text-sm text-gray-600">or sign in with</p>
               <div className="flex justify-center mt-3 space-x-3">
                 <button className="bg-white border border-gray-300 p-2 rounded-full shadow hover:bg-gray-100 transition" onClick={handleGoogleLogin}>
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Iconic_Google.svg" alt="Google" className="w-6 h-6" />
+                  <img src={BgGoogle} alt="Google" className="w-6 h-6" />
                 </button>
-                <button className="bg-white border border-gray-300 p-2 rounded-full shadow hover:bg-gray-100 transition">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Iconic_Google.svg" alt="Google" className="w-6 h-6" />
-                </button>
-                
               </div>
             </div>
     
