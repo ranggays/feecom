@@ -53,7 +53,7 @@ export default function Storefront({user}) {
           </div>
           <div className="hidden md:flex items-center gap-6">
             <a href="#" className="text-gray-700 hover:text-blue-600">Home</a>
-            <a href="#" className="text-gray-700 hover:text-blue-600">Produk</a>
+            <a href="/products" className="text-gray-700 hover:text-blue-600">Produk</a>
             <a href="#" className="text-gray-700 hover:text-blue-600">Kategori</a>
           </div>
           <div className="flex items-center gap-4">
@@ -87,7 +87,7 @@ export default function Storefront({user}) {
         {menuOpen && (
           <div className="md:hidden px-4 pb-3 space-y-2">
             <a href="#" className="block text-gray-700 hover:text-blue-600">Home</a>
-            <a href="#" className="block text-gray-700 hover:text-blue-600">Produk</a>
+            <a href="/products" className="block text-gray-700 hover:text-blue-600">Produk</a>
             <a href="#" className="block text-gray-700 hover:text-blue-600">Kategori</a>
           </div>
         )}

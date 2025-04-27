@@ -48,3 +48,35 @@ export const logout = async () => {
     })
     return res.ok ? res.json() : null;
 }
+
+export const getProducts = async () => {
+    const res = await fetch(`${BASE_URL}/api/products`)
+    return res.json();
+}
+
+export const createProduct = async (product) => {
+    const res = await fetch (`${BASE_URL}/api/products`, {
+        method: 'POST',
+        body: product,
+        credentials: "include"
+    })
+    return res.ok ? res.json() : null;
+}
+
+export const updateProduct = async (product, id) => {
+    const res = await fetch (`${BASE_URL}/api/products/${id}`, {
+        method: 'PUT',
+        body: product,
+        credentials: "include"
+    })
+    return res.ok ? res.json() : null;
+}
+
+export const deleteProduct = async (id) => {
+    const res = await fetch(`${BASE_URL}/api/products/${id}`,{
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include'
+    })
+    return res.ok ? res.json() : null;
+}

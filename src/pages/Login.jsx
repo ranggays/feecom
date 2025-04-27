@@ -14,8 +14,14 @@ function Login({setUser}){
       try {
         const user = await loginLocal(email, password);
         if(user){
+          console.log("User logged in", user.user.role);
           setUser(user);
-          navigate("/");
+          if(user.user.role === 'admin'){
+            console.log("Admin user logged in");
+            navigate("/admindashboard");
+          }else{
+            navigate("/");
+          }
         }else{
           alert("Invalid Credentials");
           navigate("/login");
