@@ -7,27 +7,43 @@ import bgSpeaker from "../assets/portable.jpg";
 import { logout } from "@/services/auth.js";
 import { Link, useNavigate } from 'react-router-dom';
 import { createProduct, getProducts, updateProduct, deleteProduct} from '../services/auth.js'
-
+import { createCart, updateCart, deleteCart, getCart } from "../services/auth.js";
 
 export default function ProductPage({ user }) {
   const [cart, setCart] = useState([]);
+  const [quantities, setQuantities] = useState({});
   const [products, setProducts] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
   
-  useEffect(() => {
-    const productsDb = async () => {
-      const product = await getProducts();
-      console.log('Isi product dari getProducts:', product);
-      setProducts(product); // <- kalau isinya { data: [...] }
-    } 
-    productsDb();
-  },[])
+  const productsDb = async () => {
+    const product = await getProducts();
+    const itemCart = await getCart();
+    // console.log('Isi product dari getProducts:', product);
+    // console.log('Isi product dari cart:', itemCart);
+    // console.log('user:', user);
+    setProducts(product); // <- kalau isinya { data: [...] }
+    setCart(itemCart);
+  };
 
-  const addToCart = (product) => {
+  useEffect(() => {
+    productsDb();
+  },[]);
+
+  const handleQuantityChange = (productId, value) => {
+    const quantity = Math.max(1, parseInt(value) || 1);
+    setQuantities(q => ({...q, [productId]:quantity}));
+  };
+
+  const addToCart = async (product) => {
+    const quantity = quantities[product.id] || 1;
+    const cart = await createCart(product.id, quantity);
+    if(cart){
+      console.log('Berhasil masuk keranjang');
+    }
     setCart(c => [...c, product]);
-  }
+  };
 
   /*
   const products = [
@@ -172,6 +188,17 @@ export default function ProductPage({ user }) {
                 <span className="text-sm text-gray-500">({product.ratingCount})</span>
               </div>
               <p className="text-xl font-bold text-blue-600">Rp {product.price}</p>
+
+              <select
+                value={quantities[product.id]}
+                onChange={(e) => handleQuantityChange(product.id, e.target.value)}
+                className="w-full border border-gray-300 rounded-md px-2 py-1 mb-3">
+                  {[...Array(10)].map((_, i) => 
+                    <option key={i + 1} value={i + 1}>
+                      {i + 1}
+                    </option>)}
+              </select>
+
               <button
                 onClick={() => addToCart(product)} // nanti diganti dengan fungsi addToCart(product)
                 className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"

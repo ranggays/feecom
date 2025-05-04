@@ -63,7 +63,7 @@ function App() {
       <Route path="/dashboard" element={<DashboardContent />} />
       <Route path="/admin/products" element={user?.role === 'admin' ? <Product /> : <Navigate to="/storefrontend" />} />
       <Route path="/products" element={<ProductPage user={user}/>} />
-      <Route path="/cart" element={<Cart />} />
+      <Route path="/cart" element={<Cart user={user}/>} />
       <Route path="/checkout" element={<Checkout />} />
     </Routes>
   )

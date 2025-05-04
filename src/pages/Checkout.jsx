@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import bgWireless from "../assets/wireless.jpg";
 import bgSmartwatch from "../assets/smartwatch.jpg";
 import bgSpeaker from "../assets/portable.jpg";
+import { FiShoppingCart, FiUser, FiMenu, FiX } from "react-icons/fi";
 
 
 export default function Checkout() {
@@ -13,6 +14,9 @@ export default function Checkout() {
     city: "",
     postal: ""
   });
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+
 
   const products = [
       {
@@ -78,6 +82,58 @@ export default function Checkout() {
 
   return (
     <div className="bg-gray-100 min-h-screen font-['Roboto'] p-6">
+      {/* Navbar */}
+            <nav className="bg-white shadow sticky top-0 z-50">
+              <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-2xl">
+                    {menuOpen ? <FiX /> : <FiMenu />}
+                  </button>
+                  <span className="text-xl font-bold text-blue-600">MyShop</span>
+                </div>
+                <div className="hidden md:flex items-center gap-6">
+                  <a href="/" className="text-gray-700 hover:text-blue-600">Home</a>
+                  <a href="/products" className="text-gray-700 hover:text-blue-600">Produk</a>
+                  <a href="#" className="text-gray-700 hover:text-blue-600">Kategori</a>
+                </div>
+                <div className="flex items-center gap-4">
+                  <input
+                    type="text"
+                    placeholder="Cari produk..."
+                    className="hidden md:block px-3 py-1 border rounded-md text-sm w-40"
+                  />
+                  <a href="/cart">
+                    <FiShoppingCart className="text-2xl text-gray-700 hover:text-blue-600 cursor-pointer" />
+                  </a>
+                  <div className="relative">
+                    <FiUser
+                      className="text-2xl text-gray-700 hover:text-blue-600 cursor-pointer"
+                      onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                    />
+                    {userDropdownOpen && (
+                      <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                        <div className="px-4 py-2 text-sm text-gray-700 border-b">👤 {user?.fullName || "Guest"}</div>
+                        <button
+                          onClick={handleLogout}
+                          className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                        >
+                          Logout
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+      
+              {/* Mobile menu */}
+              {menuOpen && (
+                <div className="md:hidden px-4 pb-3 space-y-2">
+                  <a href="/" className="block text-gray-700 hover:text-blue-600">Home</a>
+                  <a href="#" className="block text-gray-700 hover:text-blue-600">Produk</a>
+                  <a href="#" className="block text-gray-700 hover:text-blue-600">Kategori</a>
+                </div>
+              )}
+            </nav>
       <h1 className="text-2xl font-bold mb-6">Checkout</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

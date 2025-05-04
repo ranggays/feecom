@@ -19,7 +19,7 @@ export const checkSession = async () => {
         console.error("Session check failed",err);
         return null;
     }
-}
+};
 
 export const register = async (user) => {
     const res = await fetch(`${BASE_URL}/auth/register`,{
@@ -29,7 +29,7 @@ export const register = async (user) => {
         credentials: 'include',
     })
     return res.ok ? res.json() : null;
-}
+};
 
 export const loginLocal = async (email, password) => {
     const res = await fetch(`${BASE_URL}/auth/login`,{
@@ -39,7 +39,7 @@ export const loginLocal = async (email, password) => {
         credentials: 'include',
     })
     return res.ok ? res.json() : null;
-}
+};
 
 export const logout = async () => {
     const res = await fetch(`${BASE_URL}/auth/logout`,{
@@ -47,12 +47,12 @@ export const logout = async () => {
         credentials: 'include',
     })
     return res.ok ? res.json() : null;
-}
+};
 
 export const getProducts = async () => {
     const res = await fetch(`${BASE_URL}/api/products`)
     return res.json();
-}
+};
 
 export const createProduct = async (product) => {
     const res = await fetch (`${BASE_URL}/api/products`, {
@@ -61,7 +61,7 @@ export const createProduct = async (product) => {
         credentials: "include"
     })
     return res.ok ? res.json() : null;
-}
+};
 
 export const updateProduct = async (product, id) => {
     const res = await fetch (`${BASE_URL}/api/products/${id}`, {
@@ -70,7 +70,7 @@ export const updateProduct = async (product, id) => {
         credentials: "include"
     })
     return res.ok ? res.json() : null;
-}
+};
 
 export const deleteProduct = async (id) => {
     const res = await fetch(`${BASE_URL}/api/products/${id}`,{
@@ -79,4 +79,54 @@ export const deleteProduct = async (id) => {
         credentials: 'include'
     })
     return res.ok ? res.json() : null;
-}
+};
+
+export const getCart = async () => {
+    const res = await fetch(`${BASE_URL}/api/cart`, {
+        credentials: "include"
+    });
+    return res.json();
+    // const data = await res.json();
+    // console.log("getCart() response:", data); // Tambahkan log ini
+
+      // Jika respons adalah array, langsung kembalikan
+    // return data;
+};
+
+export const createCart = async (productId, quantity) => {
+    const res = await fetch(`${BASE_URL}/api/cart`, {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json',
+        },
+        body: JSON.stringify({
+            productId: productId,
+            quantity: quantity,
+        }),
+        credentials: 'include'
+    })
+    return res.ok ? res.json() : null;
+};
+
+export const updateCart = async (id, quantity) => {
+    const res = await fetch(`${BASE_URL}/api/cart/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({quantity}),
+        credentials: 'include'
+    })
+    return res.ok ? res.json() : null;
+};
+
+export const deleteCart = async (id) => {
+    const res = await fetch(`${BASE_URL}/api/cart/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+        credentials: 'include'
+    })
+    return res.ok ? res.json() : null;
+};

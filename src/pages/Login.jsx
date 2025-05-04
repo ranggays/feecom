@@ -18,7 +18,7 @@ function Login({setUser}){
           setUser(user);
           if(user.user.role === 'admin'){
             console.log("Admin user logged in");
-            navigate("/admindashboard");
+            navigate("/admin");
           }else{
             navigate("/");
           }
