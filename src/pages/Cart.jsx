@@ -91,6 +91,7 @@ export default function Cart({ user }) {
   };
 
   return (
+
     <div className="bg-gray-100 min-h-screen font-['Roboto']">
       {/* Navbar */}
       <nav className="bg-white shadow sticky top-0 z-50">

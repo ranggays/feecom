@@ -130,3 +130,52 @@ export const deleteCart = async (id) => {
     })
     return res.ok ? res.json() : null;
 };
+
+export const getOrder = async () => {
+    const res = await fetch(`${BASE_URL}/api/order`, {
+        credentials: "include"
+    });
+    return res.json();
+};
+
+export const getOrderId = async (id) => {
+    const res = await fetch(`${BASE_URL}/api/order/${id}`, {
+        credentials: "include"
+    });
+    return res.json();
+};
+
+export const createOrder = async (data) => {
+    const res = await fetch (`${BASE_URL}/api/order`, {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify(data),
+        credentials: "include"
+    });
+    return res.ok ? res.json() : null;
+};
+
+export const updateOrder = async (status, id) => {
+    const res = await fetch(`${BASE_URL}/api/order/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({status}),
+        credentials: "include"
+    });
+    return res.ok ? res.json() : null;
+};
+
+export const deleteOrder = async (id) => {
+    const res = await fetch(`${BASE_URL}/api/order/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+        credentials: "include"
+    });
+    return res.ok ? res.json() : null;
+};
