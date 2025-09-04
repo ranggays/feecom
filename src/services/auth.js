@@ -2,7 +2,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const checkSession = async () => {
     try{
-        const res = await fetch(`${BASE_URL}/auth/me`, {
+        const res = await fetch(`${BASE_URL}auth/me`, {
             credentials: 'include',
         })
 
@@ -32,7 +32,7 @@ export const register = async (user) => {
 };
 
 export const loginLocal = async (email, password) => {
-    const res = await fetch(`${BASE_URL}/auth/login`,{
+    const res = await fetch(`${BASE_URL}auth/login`,{
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({email, password}),
@@ -42,7 +42,7 @@ export const loginLocal = async (email, password) => {
 };
 
 export const logout = async () => {
-    const res = await fetch(`${BASE_URL}/auth/logout`,{
+    const res = await fetch(`${BASE_URL}auth/logout`,{
         method: 'GET',
         credentials: 'include',
     })
@@ -50,12 +50,12 @@ export const logout = async () => {
 };
 
 export const getProducts = async () => {
-    const res = await fetch(`${BASE_URL}/api/products`)
+    const res = await fetch(`${BASE_URL}api/products`)
     return res.json();
 };
 
 export const getProductById = async (id) => {
-    const res = await fetch (`${BASE_URL}/api/products/${id}`);
+    const res = await fetch (`${BASE_URL}api/products/${id}`);
     if (!res.ok){
         if (res.status === 404){
             throw new Error ('Product not found');
@@ -66,7 +66,7 @@ export const getProductById = async (id) => {
 }
 
 export const createProduct = async (product) => {
-    const res = await fetch (`${BASE_URL}/api/products`, {
+    const res = await fetch (`${BASE_URL}api/products`, {
         method: 'POST',
         body: product,
         credentials: "include"
@@ -75,7 +75,7 @@ export const createProduct = async (product) => {
 };
 
 export const updateProduct = async (product, id) => {
-    const res = await fetch (`${BASE_URL}/api/products/${id}`, {
+    const res = await fetch (`${BASE_URL}api/products/${id}`, {
         method: 'PUT',
         body: product,
         credentials: "include"
@@ -84,7 +84,7 @@ export const updateProduct = async (product, id) => {
 };
 
 export const deleteProduct = async (id) => {
-    const res = await fetch(`${BASE_URL}/api/products/${id}`,{
+    const res = await fetch(`${BASE_URL}api/products/${id}`,{
         method: 'DELETE',
         headers: {'Content-Type': 'application/json'},
         credentials: 'include'
@@ -93,7 +93,7 @@ export const deleteProduct = async (id) => {
 };
 
 export const getCart = async () => {
-    const res = await fetch(`${BASE_URL}/api/cart`, {
+    const res = await fetch(`${BASE_URL}api/cart`, {
         credentials: "include"
     });
     return res.json();
@@ -105,7 +105,7 @@ export const getCart = async () => {
 };
 
 export const createCart = async (productId, quantity) => {
-    const res = await fetch(`${BASE_URL}/api/cart`, {
+    const res = await fetch(`${BASE_URL}api/cart`, {
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json',
@@ -120,7 +120,7 @@ export const createCart = async (productId, quantity) => {
 };
 
 export const updateCart = async (id, quantity) => {
-    const res = await fetch(`${BASE_URL}/api/cart/${id}`, {
+    const res = await fetch(`${BASE_URL}api/cart/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -132,7 +132,7 @@ export const updateCart = async (id, quantity) => {
 };
 
 export const deleteCart = async (id) => {
-    const res = await fetch(`${BASE_URL}/api/cart/${id}`, {
+    const res = await fetch(`${BASE_URL}api/cart/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type' : 'application/json'
@@ -143,21 +143,21 @@ export const deleteCart = async (id) => {
 };
 
 export const getOrder = async () => {
-    const res = await fetch(`${BASE_URL}/api/order`, {
+    const res = await fetch(`${BASE_URL}api/order`, {
         credentials: "include"
     });
     return res.json();
 };
 
 export const getOrderId = async (id) => {
-    const res = await fetch(`${BASE_URL}/api/order/${id}`, {
+    const res = await fetch(`${BASE_URL}api/order/${id}`, {
         credentials: "include"
     });
     return res.json();
 };
 
 export const createOrder = async (data) => {
-    const res = await fetch (`${BASE_URL}/api/order`, {
+    const res = await fetch (`${BASE_URL}api/order`, {
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json'
@@ -169,7 +169,7 @@ export const createOrder = async (data) => {
 };
 
 export const updateOrder = async (status, id) => {
-    const res = await fetch(`${BASE_URL}/api/order/${id}`, {
+    const res = await fetch(`${BASE_URL}api/order/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type' : 'application/json'
@@ -181,7 +181,7 @@ export const updateOrder = async (status, id) => {
 };
 
 export const deleteOrder = async (id) => {
-    const res = await fetch(`${BASE_URL}/api/order/${id}`, {
+    const res = await fetch(`${BASE_URL}api/order/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type' : 'application/json'
@@ -192,14 +192,14 @@ export const deleteOrder = async (id) => {
 };
 
 export const getCategory = async () => {
-    const res = await fetch(`${BASE_URL}/api/categories`, {
+    const res = await fetch(`${BASE_URL}api/categories`, {
         credentials: "include"
     });
     return res.json();
 };
 
 export const createCategory = async (name) => {
-    const res = await fetch(`${BASE_URL}/api/categories`, {
+    const res = await fetch(`${BASE_URL}api/categories`, {
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json'
