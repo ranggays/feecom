@@ -102,41 +102,83 @@ export default function Product() {
   };
   */
 
-  const handleSaveProduct = async () => {
-    if(!newProduct.categoryId){
-      alert("Pilih kategori produk")
-    }
+const handleSaveProduct = async () => {
+  // Debug: Log nilai categoryId
+  console.log('newProduct.categoryId:', newProduct.categoryId);
+  console.log('Type of categoryId:', typeof newProduct.categoryId);
+  
+  // Validasi yang lebih ketat
+  if (!newProduct.categoryId || newProduct.categoryId === "" || newProduct.categoryId === "0") {
+    alert("Pilih kategori produk");
+    return;
+  }
+  
+  if (!newProduct.name || newProduct.name.trim() === "") {
+    alert("Nama produk harus diisi");
+    return;
+  }
+  
+  if (!newProduct.price || parseFloat(newProduct.price) <= 0) {
+    alert("Harga produk harus valid dan lebih dari 0");
+    return;
+  }
+  
+  if (!isEditing && !selectedImageFile) {
+    alert("Pilih gambar produk");
+    return;
+  }
+  
+  try {
+    const formData = new FormData();
+    formData.append("name", newProduct.name.trim());
+    formData.append("price", newProduct.price);
+    formData.append("stars", newProduct.stars || "0");
+    formData.append("ratingCount", newProduct.ratingCount || "0");
+    formData.append("categoryId", newProduct.categoryId); // Kirim sebagai string, backend akan convert
     
-    try {
-      const formData = new FormData();
-      formData.append("name", newProduct.name);
-      formData.append("price", newProduct.price);
-      formData.append("stars", newProduct.stars);
-      formData.append("ratingCount", newProduct.ratingCount);
-      formData.append("categoryId", newProduct.categoryId);
-      if (selectedImageFile) {
-        formData.append("image", selectedImageFile);
-      }
-  
-      if (isEditing) {
-        // EDIT MODE
-        await updateProduct(formData,editingProductId);
-      } else {
-        // ADD MODE
-        await createProduct(formData);
-      }
-  
-      setNewProduct({ name: "", price: "", stars: "", ratingCount: "", categoryId: "" });
-      setSelectedImageFile(null);
-      setIsEditing(false);
-      setEditingProductId(null);
-      fetchProducts();
-    } catch (error) {
-      console.error("Gagal menyimpan produk:", error);
+    if (selectedImageFile) {
+      formData.append("image", selectedImageFile);
     }
-  };
+
+    // Debug: Log FormData contents
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+
+    if (isEditing) {
+      await updateProduct(formData, editingProductId);
+    } else {
+      await createProduct(formData);
+    }
+
+    // Reset form
+    setNewProduct({ 
+      name: "", 
+      price: "", 
+      stars: "0", 
+      ratingCount: "0", 
+      categoryId: "" 
+    });
+    setSelectedImageFile(null);
+    setIsEditing(false);
+    setEditingProductId(null);
+    fetchProducts();
+    
+  } catch (error) {
+    console.error("Gagal menyimpan produk:", error);
+    
+    // Tampilkan error message yang lebih informatif
+    if (error.response && error.response.data && error.response.data.msg) {
+      alert(`Error: ${error.response.data.msg}`);
+    } else {
+      alert("Gagal menyimpan produk. Silakan coba lagi.");
+    }
+  }
+};
 
   const handleEditProduct = (product) => {
+    console.log('Editing product:', product);
+
     setIsEditing(true);
     setEditingProductId(product.id);
     setNewProduct({
@@ -146,6 +188,7 @@ export default function Product() {
       ratingCount: product.ratingCount,
       categoryId: product.categoryId
     });
+    setSelectedImageFile(null);
   };
 
   const handleDeleteProduct = async (id) => {
@@ -321,10 +364,19 @@ export default function Product() {
               value={newProduct.ratingCount}
               onChange={(e) => setNewProduct({ ...newProduct, ratingCount: e.target.value })}
             />
-            <select className="p-2 rounded bg-gray-700" onChange={(e) => setNewProduct( p => ({ ...p, categoryId: e.target.value}))}
+            <select 
+              className="p-2 rounded bg-gray-700 text-white" 
+              value={newProduct.categoryId}
+              onChange={(e) => {
+                console.log('Selected category:', e.target.value); // Debug log
+                setNewProduct(p => ({ ...p, categoryId: e.target.value}))
+              }}
             >
-              {categories.map((category, id) => (
-                <option key={id} value={category.id}>{category.name}</option>
+              <option value="">-- Pilih Kategori --</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
               ))}
             </select>
           </div>
