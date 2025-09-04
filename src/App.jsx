@@ -10,6 +10,7 @@ import Cart from './pages/Cart.jsx'
 import Checkout from './pages/Checkout.jsx'
 import Orders from './admin/Orders.jsx'
 import Dashboard from './admin/Dashboard.jsx'
+import Categories from './admin/Category.jsx'
 
 import NewDash from './pages/NewDash.jsx'
 import MyOrders from './pages/MyOrder.jsx'
@@ -80,6 +81,7 @@ function App() {
       <Route path="/admin/products" element={user?.role === 'admin' ? <Product /> : <Navigate to="/storefrontend" />} />
       <Route path='/admin/dashboard' element={user?.role === 'admin' ? <Dashboard /> : <Navigate to="/storefrontend" />} />
       <Route path="/admin/orders" element={user?.role === 'admin' ? <Orders /> : <Navigate to="/storefrontend" />} />
+      <Route path="/admin/categories" element={user?.role === 'admin' ? <Categories /> : <Navigate to="/storefrontend" />} />
 
 
       <Route 
@@ -101,6 +103,10 @@ function App() {
         <Route 
           path="/checkouts" 
           element={user ? <NewCheckout user={user} /> : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/product/:productId" 
+          element={user ? <NewDash user={user} /> : <Navigate to="/login" />} 
         />
     </Routes>
   )
