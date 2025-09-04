@@ -15,6 +15,7 @@ import {
   LayoutDashboard,
   LineChart,
   Wallet,
+  ChartBarStacked
 } from "lucide-react";
 import { getOrder } from "@/services/auth";
 
@@ -32,6 +33,7 @@ export default function AdminDashboard({ children }) {
   const menuItems = [
     { name: "Dashboard", icon: <LayoutDashboard size={20} />, path: "/admin/dashboard" },
     { name: "Produk", icon: <Box size={20} />, path: "/admin/products" },
+    { name: "Category", icon: <ChartBarStacked size={20} />, path: "/admin/categories" },
     { name: "Pesanan", icon: <ShoppingCart size={20} />, path: "/admin/orders" },
     { name: "Pengguna", icon: <Users size={20} />, path: "/admin/users" },
     { name: "Analisis", icon: <LineChart size={20} />, path: "/admin/analytics" },

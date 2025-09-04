@@ -19,25 +19,22 @@ import {
   Wallet,
   ChartBarStacked
 } from "lucide-react";
-import { getProducts, updateProduct, deleteProduct, createProduct } from "@/services/auth";
-import { getCategory } from "@/services/auth";
+import { getCategory, createCategory } from "@/services/auth";
 
-export default function Product() {
+export default function Categories() {
   
-  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [selectedImageFile, setSelectedImageFile] = useState(null);
   const [newProduct, setNewProduct] = useState({
     name: "",
-    price: "",
-    image: "",
-    stars: "",
-    ratingCount: "",
-    categoryId: ""
+    // price: "",
+    // image: "",
+    // stars: "",
+    // ratingCount: ""
   });
   const [isEditing, setIsEditing] = useState(false);
   const [editingProductId, setEditingProductId] = useState(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [categories, setCategories] = useState([]);
 
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -55,28 +52,15 @@ export default function Product() {
 
   const fetchProducts = async () => {
     try {
-      const response = await getProducts();
-      setProducts(response);
+      const response = await getCategory();
+      setCategories(response);
     } catch (error) {
       console.error("Gagal mengambil produk:", error);
     }
   };
 
-  const fetchCategory = async () => {
-    try {
-      const res = await getCategory();
-      if (!res){
-        throw new Error('Cant get category')
-      }
-      setCategories(res);
-    } catch (error) {
-      console.error("Gagal memuat error",error);
-    }
-  }
-
   useEffect(() => {
     fetchProducts();
-    fetchCategory();
   }, []);
 
   /*
@@ -103,31 +87,26 @@ export default function Product() {
   */
 
   const handleSaveProduct = async () => {
-    if(!newProduct.categoryId){
-      alert("Pilih kategori produk")
-    }
-    
     try {
       const formData = new FormData();
       formData.append("name", newProduct.name);
-      formData.append("price", newProduct.price);
-      formData.append("stars", newProduct.stars);
-      formData.append("ratingCount", newProduct.ratingCount);
-      formData.append("categoryId", newProduct.categoryId);
-      if (selectedImageFile) {
-        formData.append("image", selectedImageFile);
-      }
+    //   formData.append("price", newProduct.price);
+    //   formData.append("stars", newProduct.stars);
+    //   formData.append("ratingCount", newProduct.ratingCount);
+    //   if (selectedImageFile) {
+    //     formData.append("image", selectedImageFile);
+    //   }
   
       if (isEditing) {
         // EDIT MODE
         await updateProduct(formData,editingProductId);
       } else {
         // ADD MODE
-        await createProduct(formData);
+        await createCategory(newProduct.name);
       }
   
-      setNewProduct({ name: "", price: "", stars: "", ratingCount: "", categoryId: "" });
-      setSelectedImageFile(null);
+      setNewProduct({ name: "" });
+    //   setSelectedImageFile(null);
       setIsEditing(false);
       setEditingProductId(null);
       fetchProducts();
@@ -143,8 +122,7 @@ export default function Product() {
       name: product.name,
       price: product.price,
       stars: product.stars,
-      ratingCount: product.ratingCount,
-      categoryId: product.categoryId
+      ratingCount: product.ratingCount
     });
   };
 
@@ -293,7 +271,7 @@ export default function Product() {
               value={newProduct.name}
               onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
             />
-            <input
+            {/* <input
               className="p-2 rounded bg-gray-700"
               type="text"
               placeholder="Harga"
@@ -320,13 +298,7 @@ export default function Product() {
               placeholder="Jumlah Rating"
               value={newProduct.ratingCount}
               onChange={(e) => setNewProduct({ ...newProduct, ratingCount: e.target.value })}
-            />
-            <select className="p-2 rounded bg-gray-700" onChange={(e) => setNewProduct( p => ({ ...p, categoryId: e.target.value}))}
-            >
-              {categories.map((category, id) => (
-                <option key={id} value={category.id}>{category.name}</option>
-              ))}
-            </select>
+            /> */}
           </div>
           <button
             onClick={handleSaveProduct}
@@ -338,9 +310,10 @@ export default function Product() {
 
         {/* Daftar Produk */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
+          {categories.map((product) => (
             <div key={product.id} className="bg-gray-800 p-4 rounded-lg relative">
               <img
+                // src={`http://localhost:3000${product.image}`}
                 src={`${apiBaseUrl}${product.image}`}
                 alt={product.name}
                 className="h-40 w-full object-cover rounded"

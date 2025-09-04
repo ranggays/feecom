@@ -16,7 +16,7 @@ import {
   LineChart,
   Wallet,
 } from "lucide-react";
-import { getOrder, updateOrder } from "@/services/auth";
+import { getOrder, updateOrder, deleteOrder } from "@/services/auth";
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
@@ -33,6 +33,7 @@ export default function AdminOrders() {
     pendingOrders: 0,
     completedOrders: 0
   });
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const menuItems = [
     { name: "Dashboard", icon: <LayoutDashboard size={20} />, path: "/admin/dashboard" },
@@ -93,6 +94,21 @@ export default function AdminOrders() {
     await updateOrder(stat, selectId);
     fetchOrders();
   };
+
+  const handleDeleteOrder = async (id) => {
+      try {
+        setIsLoading(true);
+        const res = await deleteOrder(id);
+        if (res){
+          alert("Order deleted successfully");
+          fetchOrders();
+        }
+      } catch (error) {
+        console.error("Failed to delete order:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
 
 
@@ -281,7 +297,7 @@ export default function AdminOrders() {
                             <div className="flex items-center space-x-3">
                               <div className="h-12 w-12 bg-gray-700 rounded overflow-hidden flex-shrink-0">
                                 <img 
-                                  src={`http://localhost:3000${item.product.image}`} 
+                                  src={`${apiBaseUrl}${item.product.image}`} 
                                   alt={item.product.name}
                                   className="h-full w-full object-cover"
                                 />
@@ -446,11 +462,22 @@ export default function AdminOrders() {
                           </svg>
                           Detail
                         </button>
-                        <button className="bg-green-500/20 hover:bg-green-500/30 text-green-400 hover:text-green-300 px-3 py-1 rounded-lg transition-all duration-200 flex items-center text-xs">
+                        <button 
+                          className="bg-green-500/20 hover:bg-green-500/30 text-green-400 hover:text-green-300 px-3 py-1 rounded-lg transition-all duration-200 flex items-center text-xs"
+                          onClick = {() => {
+                            alert('Fitur ini belum tersedia. Silakan hubungi pengembang untuk informasi lebih lanjut.');
+                          }}
+                        >
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                           </svg>
                           Edit
+                        </button>
+                        <button 
+                          className="bg-red-500/20 hover:bg-red-500/30 text-red-400 hover:text-red-300 px-3 py-1 rounded-lg transition-all duration-200 flex items-center text-xs"
+                          onClick={() => handleDeleteOrder(order.id)}
+                        >
+                          Delete
                         </button>
                       </div>
                     </td>
