@@ -50,12 +50,16 @@ export const logout = async () => {
 };
 
 export const getProducts = async () => {
-    const res = await fetch(`${BASE_URL}api/products`)
+    const res = await fetch(`${BASE_URL}api/products`, {
+        credentials: 'include'
+    })
     return res.json();
 };
 
 export const getProductById = async (id) => {
-    const res = await fetch (`${BASE_URL}api/products/${id}`);
+    const res = await fetch (`${BASE_URL}api/products/${id}`, {
+        credentials: 'include'
+    });
     if (!res.ok){
         if (res.status === 404){
             throw new Error ('Product not found');
