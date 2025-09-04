@@ -62,6 +62,8 @@ export default function MyOrders({ user }) {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
 
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     const fetchOrders = async () => {
       if (user && user.id) {
@@ -223,7 +225,7 @@ export default function MyOrders({ user }) {
                             <div className="h-12 w-12 bg-gray-200 rounded overflow-hidden flex-shrink-0">
                                 {item.product && item.product.image ? (
                                 <img 
-                                    src={`http://localhost:3000/${item.product.image}`} 
+                                    src={`${apiBaseUrl}/${item.product.image}`} 
                                     alt={item.product?.name || "Product Image"}
                                     className="h-full w-full object-cover"
                                     onError={(e) => {

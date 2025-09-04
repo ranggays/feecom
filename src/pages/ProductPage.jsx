@@ -16,6 +16,7 @@ export default function ProductPage({ user }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   
   const productsDb = async () => {
     const product = await getProducts();
@@ -181,7 +182,7 @@ export default function ProductPage({ user }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {products?.map((product) => (
             <div key={product.id} className="bg-white shadow rounded-lg p-4 hover:shadow-md transition">
-              <img src={`http://localhost:3000${product.image}`} alt={product.name} className="w-full h-56 object-cover rounded-md mb-4" />
+              <img src={`${apiBaseUrl}${product.image}`} alt={product.name} className="w-full h-56 object-cover rounded-md mb-4" />
               <h3 className="text-lg font-semibold text-gray-800 mb-2">{product.name}</h3>
               <div className="flex items-center gap-2 mb-1">
                 {renderStars(product.stars)}

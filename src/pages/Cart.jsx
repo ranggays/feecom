@@ -13,7 +13,9 @@ export default function Cart({ user }) {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingCartId, setEditingCartId] = useState(false);
-  const [editedQuantities, setEditedQuantities] = useState({})
+  const [editedQuantities, setEditedQuantities] = useState({});
+
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const cartsDb = async () => {
     const cart = await getCart();
@@ -156,7 +158,8 @@ export default function Cart({ user }) {
               <div key={item.id} className="bg-white p-4 rounded shadow">
                 <div className="text-sm text-green-600 mb-2">Delivery date: Tuesday, June 21</div>
                 <div className="grid grid-cols-5 gap-4">
-                  <img src={`http://localhost:3000${item.product.image}`} alt={item.product.name} className="col-span-1 h-24 w-24 object-cover" />
+                  {/* <img src={`http://localhost:3000${item.product.image}`} alt={item.product.name} className="col-span-1 h-24 w-24 object-cover" /> */}
+                  <img src={`${apiBaseUrl}${item.product.image}`} alt={item.product.name} className="col-span-1 h-24 w-24 object-cover" />
                   <div className="col-span-2">
                     <div className="font-semibold">{item.product.name}</div>
                     <div className="text-gray-700">Rp{item.product.price}</div>
