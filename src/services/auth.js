@@ -54,6 +54,17 @@ export const getProducts = async () => {
     return res.json();
 };
 
+export const getProductById = async (id) => {
+    const res = await fetch (`${BASE_URL}/api/products/${id}`);
+    if (!res.ok){
+        if (res.status === 404){
+            throw new Error ('Product not found');
+        }
+        throw new Error('Failed to fetch product details');
+    }
+    return res.json();
+}
+
 export const createProduct = async (product) => {
     const res = await fetch (`${BASE_URL}/api/products`, {
         method: 'POST',
@@ -179,3 +190,22 @@ export const deleteOrder = async (id) => {
     });
     return res.ok ? res.json() : null;
 };
+
+export const getCategory = async () => {
+    const res = await fetch(`${BASE_URL}/api/categories`, {
+        credentials: "include"
+    });
+    return res.json();
+};
+
+export const createCategory = async (name) => {
+    const res = await fetch(`${BASE_URL}/api/categories`, {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({name})
+    })
+    return res.ok ? res.json() : null;
+}
