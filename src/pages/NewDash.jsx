@@ -436,7 +436,7 @@ export default function Storefront({user}) {
           {menuOpen && (
             <div className="md:hidden px-4 pb-4 space-y-2 border-t border-gray-200/50 bg-white/95 backdrop-blur-md">
               <Link to="/" className="block py-3 text-gray-700 hover:text-blue-600 font-medium">Home</Link>
-              <Link to="/products" className="block py-3 text-gray-700 hover:text-blue-600 font-medium">Produk</Link>
+              <Link to="/product" className="block py-3 text-gray-700 hover:text-blue-600 font-medium">Produk</Link>
               <Link to="/my-orders" className="block py-3 text-gray-700 hover:text-blue-600 font-medium flex items-center">
                 <FiPackage className="mr-2" /> Pesanan Saya
               </Link>
